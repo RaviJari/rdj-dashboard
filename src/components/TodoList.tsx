@@ -48,17 +48,23 @@ function SortableTodo({
       <button
         {...listeners}
         {...attributes}
-        className="cursor-grab active:cursor-grabbing text-gray-600 hover:text-gray-400 transition-colors text-xs leading-none"
+        className="cursor-grab active:cursor-grabbing text-gray-500 hover:text-gray-300 transition-colors rounded-lg p-0.5 hover:bg-white/[0.06]"
+        aria-label="Drag to reorder"
       >
-        ⠿
+        <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <line x1="8" y1="6" x2="16" y2="6" />
+          <line x1="8" y1="12" x2="16" y2="12" />
+          <line x1="8" y1="18" x2="16" y2="18" />
+        </svg>
       </button>
       <button
         onClick={() => toggleTodo(todo.id)}
-        className={`w-4 h-4 rounded border flex-shrink-0 flex items-center justify-center transition-all ${
+        className={`cursor-pointer w-4 h-4 rounded border flex-shrink-0 flex items-center justify-center transition-all ${
           todo.done
             ? 'bg-blue-500 border-blue-500'
             : 'border-white/[0.15] hover:border-blue-500/50'
         }`}
+        aria-label={todo.done ? 'Mark as incomplete' : 'Mark as complete'}
       >
         {todo.done && (
           <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
@@ -75,9 +81,12 @@ function SortableTodo({
       </span>
       <button
         onClick={() => deleteTodo(todo.id)}
-        className="text-gray-700 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all text-xs"
+        className="cursor-pointer text-gray-600 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all rounded p-0.5 hover:bg-white/[0.06]"
+        aria-label="Delete todo"
       >
-        ✕
+        <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
       </button>
     </div>
   )
@@ -164,7 +173,7 @@ export default function TodoList() {
         />
         <button
           type="submit"
-          className="px-4 py-2 bg-blue-500/10 text-blue-400 text-sm font-medium rounded-lg hover:bg-blue-500/20 transition-colors"
+          className="cursor-pointer px-4 py-2 bg-blue-500/10 text-blue-400 text-sm font-medium rounded-lg hover:bg-blue-500/20 transition-colors"
         >
           Add
         </button>
@@ -186,7 +195,7 @@ export default function TodoList() {
       {todos.some((t) => t.done) && (
         <button
           onClick={() => setTodos((prev) => prev.filter((t) => !t.done))}
-          className="mt-3 text-xs text-gray-600 hover:text-gray-400 transition-colors"
+          className="cursor-pointer mt-3 text-xs text-gray-600 hover:text-gray-400 transition-colors"
         >
           Clear completed
         </button>

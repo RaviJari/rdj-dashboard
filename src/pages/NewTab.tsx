@@ -42,7 +42,7 @@ function WidgetOverlay({ id }: { id: string }) {
   const meta = widgetMeta[id as WidgetId]
   if (!meta) return null
   return (
-    <div className="bg-white/[0.06] backdrop-blur-xl border border-white/[0.1] rounded-xl p-4 shadow-2xl rotate-2 scale-105">
+    <div className="glass rounded-xl p-4 shadow-2xl rotate-2 scale-105">
       {meta.title && (
         <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
           {meta.title}

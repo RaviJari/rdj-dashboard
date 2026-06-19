@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo, useCallback, Component, type ReactNode } 
 import { useBookmarks } from '../hooks/useBookmarks'
 import { getDomain, getColor } from '../utils/bookmarkHelpers'
 import type { BookmarkTreeNode } from '../types'
+import FaviconImg from './FaviconImg'
 
 function safeAllBookmarks(nodes: BookmarkTreeNode[]): BookmarkTreeNode[] {
   try {
@@ -102,16 +103,17 @@ function TreeNode({
       <div>
         <button
           onClick={() => setExpanded((v) => !v)}
-          className="flex items-center gap-2 w-full text-left px-3 py-2 rounded-xl hover:bg-white/[0.04] transition-all text-sm font-medium text-gray-300"
+          className="cursor-pointer flex items-center gap-2 w-full text-left px-3 py-2 rounded-xl hover:bg-white/[0.04] transition-all text-sm font-medium text-gray-300"
           style={{ paddingLeft: `${depth * 16 + 12}px` }}
         >
-          <span
-            className={`text-[10px] text-gray-600 transition-transform duration-200 ${
+          <svg
+            className={`w-3 h-3 text-gray-500 transition-transform duration-200 flex-shrink-0 ${
               expanded ? 'rotate-90' : ''
             }`}
+            viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
           >
-            ▶
-          </span>
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
           <span>{node.title || 'Bookmarks'}</span>
           {bookmarkCount > 0 && (
             <span className="text-[11px] text-gray-600 ml-auto">{bookmarkCount}</span>
@@ -136,7 +138,6 @@ function TreeNode({
 
   const domain = getDomain(node.url ?? '')
   const color = getColor(node.title ?? '')
-  const initial = node.title ? node.title[0].toUpperCase() : 'B'
   const isPinned = pinnedIds.has(node.id)
 
   return (
@@ -144,11 +145,7 @@ function TreeNode({
       className="group flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-white/[0.03] transition-all"
       style={{ paddingLeft: `${depth * 16 + 12}px` }}
     >
-      <div
-        className={`w-5 h-5 rounded-md bg-gradient-to-br ${color} flex items-center justify-center text-[10px] font-semibold flex-shrink-0`}
-      >
-        {initial}
-      </div>
+      <FaviconImg domain={domain} size={20} color={color} className="rounded-md" />
       <a
         href={node.url}
         className="flex-1 min-w-0 text-sm text-gray-400 hover:text-gray-200 transition-colors truncate"
@@ -162,13 +159,16 @@ function TreeNode({
       )}
       <button
         onClick={() => onTogglePin(node.id)}
-        className={`flex-shrink-0 transition-all text-[11px] ${
+        className={`cursor-pointer flex-shrink-0 transition-all p-0.5 rounded hover:bg-white/[0.06] ${
           isPinned
             ? 'text-yellow-500 opacity-100'
-            : 'text-gray-600 opacity-0 group-hover:opacity-100 hover:text-gray-400'
+            : 'text-gray-600 opacity-0 group-hover:opacity-100'
         }`}
+        aria-label={isPinned ? 'Unpin bookmark' : 'Pin bookmark'}
       >
-        ★
+        <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill={isPinned ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+        </svg>
       </button>
     </div>
   )
@@ -185,16 +185,11 @@ function BookmarkCard({
 }) {
   const domain = getDomain(bookmark.url ?? '')
   const color = getColor(bookmark.title ?? '')
-  const initial = bookmark.title ? bookmark.title[0].toUpperCase() : 'B'
 
   return (
     <div className="group flex items-center gap-3 p-3 bg-white/[0.03] border border-white/[0.06] rounded-xl hover:bg-white/[0.06] hover:border-white/[0.1] hover:scale-[1.02] active:scale-[0.98] transition-all">
       <a href={bookmark.url} className="flex items-center gap-3 flex-1 min-w-0">
-        <div
-          className={`w-9 h-9 rounded-lg bg-gradient-to-br ${color} flex items-center justify-center text-sm font-semibold flex-shrink-0`}
-        >
-          {initial}
-        </div>
+        <FaviconImg domain={domain} size={36} color={color} className="rounded-lg" />
         <div className="min-w-0">
           <div className="text-sm font-medium text-gray-200 truncate group-hover:text-white transition-colors">
             {bookmark.title || domain || 'Bookmark'}

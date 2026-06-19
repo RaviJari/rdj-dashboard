@@ -68,7 +68,7 @@ export default function DashboardTodos() {
         />
         <button
           type="submit"
-          className="px-3 py-1.5 bg-blue-500/10 text-blue-400 text-xs font-medium rounded-lg hover:bg-blue-500/20 transition-colors"
+          className="cursor-pointer px-3 py-1.5 bg-blue-500/10 text-blue-400 text-xs font-medium rounded-lg hover:bg-blue-500/20 transition-colors"
         >
           Add
         </button>
@@ -79,7 +79,13 @@ export default function DashboardTodos() {
           <p className="text-xs text-gray-600 text-center py-4">No todos yet</p>
         )}
         {visible.length === 0 && todos.length > 0 && (
-          <p className="text-xs text-gray-600 text-center py-4">All done! 🎉</p>
+          <div className="flex items-center justify-center gap-1.5 py-4">
+            <svg className="w-4 h-4 text-green-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="8 12 11 15 16 9" />
+            </svg>
+            <p className="text-xs text-gray-600">All done!</p>
+          </div>
         )}
         {visible.map((todo) => (
           <div
@@ -88,11 +94,12 @@ export default function DashboardTodos() {
           >
             <button
               onClick={() => toggleTodo(todo.id)}
-              className={`w-3.5 h-3.5 rounded border flex-shrink-0 flex items-center justify-center transition-all ${
+              className={`cursor-pointer w-3.5 h-3.5 rounded border flex-shrink-0 flex items-center justify-center transition-all ${
                 todo.done
                   ? 'bg-blue-500 border-blue-500'
                   : 'border-white/[0.15] hover:border-blue-500/50'
               }`}
+              aria-label={todo.done ? 'Mark as incomplete' : 'Mark as complete'}
             >
               {todo.done && (
                 <svg className="w-2.5 h-2.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
@@ -109,9 +116,12 @@ export default function DashboardTodos() {
             </span>
             <button
               onClick={() => deleteTodo(todo.id)}
-              className="text-gray-700 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all text-[10px]"
+              className="cursor-pointer text-gray-600 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all rounded p-0.5 hover:bg-white/[0.06]"
+              aria-label="Delete todo"
             >
-              ✕
+              <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
             </button>
           </div>
         ))}

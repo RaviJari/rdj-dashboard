@@ -41,8 +41,8 @@ export default function Widget({ id, title, children, className = '' }: WidgetPr
     <div
       ref={setNodeRef}
       style={style}
-      className={`group bg-white/[0.03] backdrop-blur-xl border transition-all ${radiusClass} ${spanClass} ${className} ${
-        isDragging ? 'border-white/[0.12] shadow-xl z-10' : 'border-white/[0.06]'
+      className={`group glass glass-hover transition-all ${radiusClass} ${spanClass} ${className} ${
+        isDragging ? 'ring-2 ring-blue-500/30 border-white/[0.18] shadow-xl z-10' : ''
       }`}
     >
       <div className="flex items-center justify-between p-4 pb-0">
@@ -52,8 +52,9 @@ export default function Widget({ id, title, children, className = '' }: WidgetPr
         <div className="flex items-center gap-1">
           <button
             onClick={toggleSpan}
-            className="text-gray-600 hover:text-gray-300 transition-colors text-xs leading-none px-1 py-0.5 rounded hover:bg-white/[0.06]"
+            className="cursor-pointer text-gray-500 hover:text-gray-200 transition-colors rounded-lg p-1 hover:bg-white/[0.08]"
             title={span >= 2 ? 'Collapse' : 'Expand'}
+            aria-label={span >= 2 ? 'Collapse widget' : 'Expand widget'}
           >
             {span >= 2 ? (
               <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -70,9 +71,14 @@ export default function Widget({ id, title, children, className = '' }: WidgetPr
           <button
             {...listeners}
             {...attributes}
-            className="cursor-grab active:cursor-grabbing select-none text-gray-600 hover:text-gray-300 transition-colors text-sm leading-none"
+            className="cursor-grab active:cursor-grabbing select-none text-gray-500 hover:text-gray-200 transition-colors rounded-lg p-1 hover:bg-white/[0.08]"
+            aria-label="Drag to reorder"
           >
-            ⠿
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="8" y1="6" x2="16" y2="6" />
+              <line x1="8" y1="12" x2="16" y2="12" />
+              <line x1="8" y1="18" x2="16" y2="18" />
+            </svg>
           </button>
         </div>
       </div>

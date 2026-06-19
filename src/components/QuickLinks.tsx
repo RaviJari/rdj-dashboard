@@ -1,4 +1,9 @@
 import { useState, useEffect, useRef } from 'react'
+import FaviconImg from './FaviconImg'
+
+function getDomain(url: string): string {
+  try { return new URL(url).hostname } catch { return '' }
+}
 
 interface QuickLink {
   label: string
@@ -107,23 +112,25 @@ export default function QuickLinks() {
                   className="w-full px-2 py-1 text-xs bg-white/[0.05] border border-white/[0.08] rounded text-gray-200 placeholder-gray-600 focus:outline-none focus:border-blue-500/50"
                 />
                 <div className="flex gap-1.5">
-                  <button onClick={saveEdit} className="text-[11px] px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 hover:bg-blue-500/20 transition-colors">Save</button>
-                  <button onClick={cancelEdit} className="text-[11px] px-2 py-0.5 rounded text-gray-500 hover:text-gray-300 transition-colors">Cancel</button>
+                  <button onClick={saveEdit} className="cursor-pointer text-[11px] px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 hover:bg-blue-500/20 transition-colors">Save</button>
+                  <button onClick={cancelEdit} className="cursor-pointer text-[11px] px-2 py-0.5 rounded text-gray-500 hover:text-gray-300 transition-colors">Cancel</button>
                 </div>
               </div>
             ) : (
               <div className="flex items-center">
                 <a
                   href={link.url}
-                  className="flex-1 px-3 py-2 bg-white/[0.04] rounded-xl text-sm text-gray-300 hover:bg-white/[0.08] hover:text-white transition-all hover:scale-[1.02] active:scale-[0.98] truncate"
+                  className="flex-1 flex items-center gap-2 px-3 py-2 bg-white/[0.04] rounded-xl text-sm text-gray-300 hover:bg-white/[0.08] hover:text-white transition-all hover:scale-[1.02] active:scale-[0.98] truncate"
                 >
-                  {link.label}
+                  <FaviconImg domain={getDomain(link.url)} size={16} className="rounded" />
+                  <span className="truncate">{link.label}</span>
                 </a>
                 <div className="absolute right-1 top-1/2 -translate-y-1/2 flex opacity-0 group-hover:opacity-100 transition-opacity">
                   <button
                     onClick={(e) => { e.preventDefault(); startEdit(link) }}
-                    className="p-1 text-gray-600 hover:text-gray-300 transition-colors"
+                    className="cursor-pointer p-1 text-gray-500 hover:text-gray-200 transition-colors rounded hover:bg-white/[0.08]"
                     title="Edit"
+                    aria-label="Edit quick link"
                   >
                     <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
@@ -132,8 +139,9 @@ export default function QuickLinks() {
                   </button>
                   <button
                     onClick={() => deleteLink(link.url)}
-                    className="p-1 text-gray-600 hover:text-red-400 transition-colors"
+                    className="cursor-pointer p-1 text-gray-500 hover:text-red-400 transition-colors rounded hover:bg-white/[0.08]"
                     title="Delete"
+                    aria-label="Delete quick link"
                   >
                     <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <polyline points="3 6 5 6 21 6" />
@@ -165,14 +173,14 @@ export default function QuickLinks() {
             className="w-full px-2 py-1.5 text-xs bg-white/[0.05] border border-white/[0.08] rounded text-gray-200 placeholder-gray-600 focus:outline-none focus:border-blue-500/50"
           />
           <div className="flex gap-1.5">
-            <button onClick={addLink} className="text-[11px] px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 hover:bg-blue-500/20 transition-colors">Add</button>
-            <button onClick={cancelEdit} className="text-[11px] px-2 py-0.5 rounded text-gray-500 hover:text-gray-300 transition-colors">Cancel</button>
+            <button onClick={addLink} className="cursor-pointer text-[11px] px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 hover:bg-blue-500/20 transition-colors">Add</button>
+            <button onClick={cancelEdit} className="cursor-pointer text-[11px] px-2 py-0.5 rounded text-gray-500 hover:text-gray-300 transition-colors">Cancel</button>
           </div>
         </div>
       ) : (
         <button
           onClick={() => { setAdding(true); setEditLabel(''); setEditUrl('') }}
-          className="w-full py-1.5 text-xs text-gray-500 hover:text-gray-300 bg-white/[0.03] hover:bg-white/[0.06] rounded-xl border border-white/[0.04] hover:border-white/[0.08] transition-all"
+          className="cursor-pointer w-full py-1.5 text-xs text-gray-500 hover:text-gray-300 bg-white/[0.03] hover:bg-white/[0.06] rounded-xl border border-white/[0.04] hover:border-white/[0.08] transition-all"
         >
           + Add Link
         </button>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useBookmarks } from '../hooks/useBookmarks'
 import { getDomain, getColor, getAllBookmarks } from '../utils/bookmarkHelpers'
+import FaviconImg from './FaviconImg'
 
 export default function PinnedBookmarks() {
   const bookmarks = useBookmarks()
@@ -27,7 +28,6 @@ export default function PinnedBookmarks() {
       {pinned.map((bookmark) => {
         const domain = getDomain(bookmark.url ?? '')
         const color = getColor(bookmark.title)
-        const initial = bookmark.title ? bookmark.title[0].toUpperCase() : 'B'
 
         return (
           <a
@@ -35,11 +35,7 @@ export default function PinnedBookmarks() {
             href={bookmark.url}
             className="group flex items-center gap-3 p-3 bg-white/[0.03] border border-white/[0.06] rounded-xl hover:bg-white/[0.06] hover:border-white/[0.1] hover:scale-[1.02] active:scale-[0.98] transition-all"
           >
-            <div
-              className={`w-9 h-9 rounded-lg bg-gradient-to-br ${color} flex items-center justify-center text-sm font-semibold flex-shrink-0`}
-            >
-              {initial}
-            </div>
+            <FaviconImg domain={domain} size={36} color={color} className="rounded-lg" />
             <div className="min-w-0">
               <div className="text-sm font-medium text-gray-200 truncate group-hover:text-white transition-colors">
                 {bookmark.title || domain || 'Bookmark'}

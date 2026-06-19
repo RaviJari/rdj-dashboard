@@ -14,15 +14,15 @@ const tabs: { id: Tab; label: string }[] = [
 export default function TabBar({ activeTab, onChange }: TabBarProps) {
   return (
     <div className="flex items-center justify-center">
-      <div className="flex items-center gap-1 p-1 bg-white/[0.03] rounded-xl border border-white/[0.06]">
+      <div className="flex items-center gap-1 p-1 bg-white/[0.05] rounded-2xl border border-white/[0.08]">
         {tabs.map((tab) => (
           <button
             key={tab.id}
             onClick={() => onChange(tab.id)}
-            className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${
+            className={`cursor-pointer px-4 py-2 text-sm font-medium rounded-xl transition-all ${
               activeTab === tab.id
-                ? 'bg-blue-500/10 text-blue-400 shadow-sm'
-                : 'text-gray-500 hover:text-gray-300 hover:bg-white/[0.03]'
+                ? 'bg-white/[0.10] text-white shadow-sm'
+                : 'text-gray-500 hover:text-gray-300 hover:bg-white/[0.06]'
             }`}
           >
             {tab.label}
