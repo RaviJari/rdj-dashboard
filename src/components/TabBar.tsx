@@ -1,0 +1,34 @@
+export type Tab = 'dashboard' | 'bookmarks' | 'todos'
+
+interface TabBarProps {
+  activeTab: Tab
+  onChange: (tab: Tab) => void
+}
+
+const tabs: { id: Tab; label: string }[] = [
+  { id: 'dashboard', label: 'Dashboard' },
+  { id: 'bookmarks', label: 'Bookmarks' },
+  { id: 'todos', label: 'Todos' },
+]
+
+export default function TabBar({ activeTab, onChange }: TabBarProps) {
+  return (
+    <div className="flex items-center justify-center">
+      <div className="flex items-center gap-1 p-1 bg-white/[0.03] rounded-xl border border-white/[0.06]">
+        {tabs.map((tab) => (
+          <button
+            key={tab.id}
+            onClick={() => onChange(tab.id)}
+            className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${
+              activeTab === tab.id
+                ? 'bg-blue-500/10 text-blue-400 shadow-sm'
+                : 'text-gray-500 hover:text-gray-300 hover:bg-white/[0.03]'
+            }`}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+    </div>
+  )
+}

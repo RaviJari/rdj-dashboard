@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "RDJ Dashboard",
+  "version": "1.0.0",
+  "description": "Developer Command Center — New Tab Dashboard",
+  "permissions": ["bookmarks", "storage"],
+  "host_permissions": [
+    "https://api.open-meteo.com/*",
+    "https://geocoding-api.open-meteo.com/*",
+    "https://nominatim.openstreetmap.org/*",
+    "https://ip-api.com/*"
+  ],
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  }
+}
