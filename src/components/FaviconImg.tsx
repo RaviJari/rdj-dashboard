@@ -36,13 +36,20 @@ export default function FaviconImg({ domain, size, color, className = '' }: Favi
 
   const sources = getSources(domain)
 
-  const handleError = useCallback(() => {
+  const advance = useCallback(() => {
     if (srcIndex < sources.length - 1) {
       setSrcIndex(srcIndex + 1)
     } else {
       setFailed(true)
     }
   }, [srcIndex, sources.length])
+
+  const handleLoad = useCallback((e: React.SyntheticEvent<HTMLImageElement>) => {
+    const img = e.currentTarget
+    if (img.naturalWidth <= 16 && img.naturalHeight <= 16) {
+      advance()
+    }
+  }, [advance])
 
   if (failed) {
     const initial = (domain[0] || 'B').toUpperCase()
@@ -66,7 +73,8 @@ export default function FaviconImg({ domain, size, color, className = '' }: Favi
       height={size}
       className={`flex-shrink-0 ${className}`}
       style={{ borderRadius: size * 0.25, minWidth: size }}
-      onError={handleError}
+      onError={advance}
+      onLoad={handleLoad}
       loading="lazy"
     />
   )
