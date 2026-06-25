@@ -17,6 +17,7 @@ import {
 } from '@dnd-kit/sortable'
 import { useSettings } from '../context/SettingsContext'
 import TabBar from '../components/TabBar'
+import ProfileSwitcher from '../components/ProfileSwitcher'
 import type { Tab } from '../components/TabBar'
 import BookmarkSearch from '../components/BookmarkSearch'
 import BookmarkTree from '../components/BookmarkTree'
@@ -132,6 +133,9 @@ export default function NewTab() {
       <div className="max-w-5xl mx-auto p-4 sm:p-6">
         <TabBar activeTab={activeTab} onChange={setActiveTab} />
         <SettingsPanel />
+        <div className="flex justify-end -mt-2 mb-1">
+          <ProfileSwitcher compact />
+        </div>
 
         {activeTab === 'dashboard' && <Dashboard />}
 

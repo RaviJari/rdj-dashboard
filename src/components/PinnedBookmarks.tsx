@@ -2,19 +2,24 @@ import { useState, useEffect } from 'react'
 import { useBookmarks } from '../hooks/useBookmarks'
 import { getDomain, getColor, getAllBookmarks } from '../utils/bookmarkHelpers'
 import FaviconImg from './FaviconImg'
+import { useProfile, profileKey } from '../hooks/useProfile'
 
 export default function PinnedBookmarks() {
+  const { profile } = useProfile()
+  const storageKey = profileKey('pinnedBookmarks', profile)
   const bookmarks = useBookmarks()
   const [pinnedIds, setPinnedIds] = useState<Set<string>>(new Set())
 
   useEffect(() => {
-    const stored = localStorage.getItem('pinnedBookmarks')
+    const stored = localStorage.getItem(storageKey)
     if (stored) {
       try {
         setPinnedIds(new Set(JSON.parse(stored)))
       } catch {}
+    } else {
+      setPinnedIds(new Set())
     }
-  }, [])
+  }, [storageKey])
 
   const allBookmarks = getAllBookmarks(bookmarks)
   const pinned = allBookmarks.filter((b) => pinnedIds.has(b.id))

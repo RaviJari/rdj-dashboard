@@ -3,6 +3,7 @@ import { useBookmarks } from '../hooks/useBookmarks'
 import { getDomain, getColor } from '../utils/bookmarkHelpers'
 import type { BookmarkTreeNode } from '../types'
 import FaviconImg from './FaviconImg'
+import { useProfile, profileKey } from '../hooks/useProfile'
 
 function safeAllBookmarks(nodes: BookmarkTreeNode[]): BookmarkTreeNode[] {
   try {
@@ -212,19 +213,23 @@ function BookmarkCard({
 }
 
 function TreeContent() {
+  const { profile } = useProfile()
+  const storageKey = profileKey('pinnedBookmarks', profile)
   const [pinnedIds, setPinnedIds] = useState<Set<string>>(new Set())
   const bookmarks = useBookmarks()
   const allItems = useMemo(() => safeAllBookmarks(bookmarks), [bookmarks])
   const pinnedItems = allItems.filter((b) => pinnedIds.has(b.id))
 
   useEffect(() => {
-    const stored = localStorage.getItem('pinnedBookmarks')
+    const stored = localStorage.getItem(storageKey)
     if (stored) {
       try {
         setPinnedIds(new Set(JSON.parse(stored)))
       } catch {}
+    } else {
+      setPinnedIds(new Set())
     }
-  }, [])
+  }, [storageKey])
 
   const togglePin = useCallback((id: string) => {
     setPinnedIds((prev) => {
@@ -234,10 +239,10 @@ function TreeContent() {
       } else {
         next.add(id)
       }
-      localStorage.setItem('pinnedBookmarks', JSON.stringify([...next]))
+      localStorage.setItem(storageKey, JSON.stringify([...next]))
       return next
     })
-  }, [])
+  }, [storageKey])
 
   if (bookmarks.length === 0) {
     return (

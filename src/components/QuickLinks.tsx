@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import FaviconImg from './FaviconImg'
+import { useProfile, profileKey } from '../hooks/useProfile'
 
 function getDomain(url: string): string {
   try { return new URL(url).hostname } catch { return '' }
@@ -18,6 +19,8 @@ const defaults: QuickLink[] = [
 ]
 
 export default function QuickLinks() {
+  const { profile } = useProfile()
+  const storageKey = profileKey('quicklinks', profile)
   const [links, setLinks] = useState<QuickLink[]>(defaults)
   const [editing, setEditing] = useState<string | null>(null)
   const [adding, setAdding] = useState(false)
@@ -26,17 +29,19 @@ export default function QuickLinks() {
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    const stored = localStorage.getItem('quicklinks')
+    const stored = localStorage.getItem(storageKey)
     if (stored) {
       try {
         setLinks(JSON.parse(stored))
       } catch {}
+    } else {
+      setLinks(defaults)
     }
-  }, [])
+  }, [storageKey])
 
   useEffect(() => {
-    localStorage.setItem('quicklinks', JSON.stringify(links))
-  }, [links])
+    localStorage.setItem(storageKey, JSON.stringify(links))
+  }, [links, storageKey])
 
   useEffect(() => {
     if ((adding || editing) && inputRef.current) {
