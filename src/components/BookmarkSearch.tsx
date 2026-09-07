@@ -126,7 +126,7 @@ export default function BookmarkSearch() {
   }
 
   return (
-    <div className="relative">
+    <div className="relative flex justify-center">
       <input
         ref={inputRef}
         type="text"
@@ -134,7 +134,7 @@ export default function BookmarkSearch() {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         onKeyDown={handleKeyDown}
-        className="w-full px-5 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl text-gray-100 placeholder-gray-600 focus:outline-none focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/10 transition-all text-base"
+        className="w-full max-w-md flex px-6 py-3.5 bg-white/[0.08] border border-white/[0.16] rounded-full text-center text-base text-white placeholder-gray-400 shadow-lg backdrop-blur-xl focus:outline-none focus:ring-2 focus:ring-white/20 focus:bg-white/[0.12] focus:border-white/25 transition-all"
       />
       {open && dropdownPos && createPortal(
         <div

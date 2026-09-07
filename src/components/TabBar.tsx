@@ -14,7 +14,7 @@ const tabs: { id: Tab; label: string }[] = [
 export default function TabBar({ activeTab, onChange }: TabBarProps) {
   return (
     <div className="flex items-center justify-center">
-      <div className="flex items-center gap-1 p-1 bg-white/[0.05] rounded-2xl border border-white/[0.08]">
+      <div className="flex items-center gap-1 p-1 bg-black/30 rounded-2xl border border-white/[0.10] backdrop-blur-xl">
         {tabs.map((tab) => (
           <button
             key={tab.id}

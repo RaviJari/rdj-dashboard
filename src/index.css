@@ -4,15 +4,15 @@
 
 @layer components {
   .glass {
-    @apply bg-white/[0.06] backdrop-blur-2xl saturate-[1.8] border border-white/[0.10] shadow-lg shadow-black/[0.12];
+    @apply bg-[#0d0d16]/65 backdrop-blur-2xl saturate-[1.5] border border-white/[0.12] shadow-lg shadow-black/[0.25];
   }
 
   .glass-hover {
-    @apply hover:bg-white/[0.10] hover:border-white/[0.18] transition-all duration-300;
+    @apply hover:bg-[#0d0d16]/80 hover:border-white/[0.2] transition-all duration-300;
   }
 
   .glass-strong {
-    @apply bg-white/[0.10] backdrop-blur-2xl saturate-[1.8] border border-white/[0.14] shadow-xl shadow-black/[0.15];
+    @apply bg-[#0d0d16]/80 backdrop-blur-2xl saturate-[1.5] border border-white/[0.14] shadow-xl shadow-black/[0.3];
   }
 }
 
@@ -49,6 +49,43 @@
 *:focus-visible {
   outline: 2px solid rgba(59, 130, 246, 0.5);
   outline-offset: 2px;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.16) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: 9999px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.28);
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: rgba(255, 255, 255, 0.36);
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
 }
 
 @media (prefers-reduced-motion: reduce) {

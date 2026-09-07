@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useSettings } from '../context/SettingsContext'
+import { useProfile } from '../hooks/useProfile'
+import SearchOverlay from './SearchOverlay'
 import { Sun, CloudSun, Cloud, CloudFog, CloudDrizzle, CloudRain, CloudSnow, CloudLightning } from 'lucide-react'
 
 interface WeatherData {
@@ -129,17 +131,36 @@ function saveCache(cityName: string, data: WeatherData, location: string, lat: n
 
 export default function ClockWeather() {
   const { settings } = useSettings()
+  const { profile } = useProfile()
+  const focusKey = `dashboard-focus_${profile}`
   const [time, setTime] = useState(new Date())
+  const [focus, setFocus] = useState('')
   const [weather, setWeather] = useState<WeatherData | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [locationName, setLocationName] = useState('')
+  const [searchOpen, setSearchOpen] = useState(false)
   const mounted = useRef(true)
   const cachedCoords = useRef<{ lat: number; lon: number } | null>(null)
 
   useEffect(() => {
+    setFocus(localStorage.getItem(focusKey) ?? '')
+  }, [focusKey])
+
+  useEffect(() => {
     const interval = setInterval(() => setTime(new Date()), 1000)
     return () => clearInterval(interval)
+  }, [])
+
+  useEffect(() => {
+    function handler(e: KeyboardEvent) {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault()
+        setSearchOpen(true)
+      }
+    }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
   }, [])
 
   useEffect(() => {
@@ -224,48 +245,77 @@ export default function ClockWeather() {
     return () => { mounted.current = false }
   }, [settings.cityName])
 
+  const searchEnabled = !settings.hiddenWidgets.includes('search')
+
   return (
-    <div className="flex items-center justify-between select-none">
-      <div>
-        <div className="text-[11px] text-gray-400 font-medium mb-2">
-          {greeting(time.getHours())}
-        </div>
-        <div className="text-3xl sm:text-4xl font-extralight text-gray-100 tabular-nums tracking-tight leading-none">
-          {time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-        </div>
-        <div className="text-xs text-gray-500 mt-1.5">
-          {time.toLocaleDateString([], { weekday: 'long', month: 'long', day: 'numeric' })}
-        </div>
+    <div className="relative w-full flex flex-col items-center text-center select-none">
+      {searchEnabled && (
+        <button
+          onClick={() => setSearchOpen(true)}
+          title="Search bookmarks (⌘K)"
+          aria-label="Search bookmarks"
+          className="absolute top-0 left-0 cursor-pointer w-8 h-8 flex items-center justify-center rounded-full bg-white/[0.08] border border-white/[0.14] text-white/80 hover:text-white hover:bg-white/[0.16] backdrop-blur-xl transition-all hover:scale-105 active:scale-95"
+        >
+          <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          </svg>
+        </button>
+      )}
+      <div className="text-base sm:text-xl text-white/70 font-light">
+        {greeting(time.getHours())}
       </div>
 
-      <div className="text-right">
+      <div className="text-7xl sm:text-8xl font-thin text-white tabular-nums tracking-tight leading-none mt-1 drop-shadow-[0_2px_12px_rgba(0,0,0,0.35)]">
+        {time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+      </div>
+
+      <div className="text-sm sm:text-base text-white/75 font-light mt-3">
+        {time.toLocaleDateString([], { weekday: 'long', month: 'long', day: 'numeric' })}
+      </div>
+
+      <div className="mt-7 flex flex-col items-center gap-1.5">
+        <span className="text-[11px] uppercase tracking-[0.25em] text-white/60 font-medium">
+          Today's Focus
+        </span>
+        <input
+          value={focus}
+          onChange={(e) => {
+            setFocus(e.target.value)
+            localStorage.setItem(focusKey, e.target.value)
+          }}
+          placeholder="What's your main focus today?"
+          className="bg-transparent text-center outline-none text-base sm:text-lg text-white font-light placeholder:text-white/40 border-b border-white/25 focus:border-white/70 pb-1 min-w-[260px] max-w-[420px] transition-colors"
+        />
+      </div>
+
+      <div className="mt-7">
         {error && !weather && (
-          <div className="text-xs text-gray-600">{error}</div>
+          <div className="text-xs text-white/50">{error}</div>
         )}
         {weather && (
-          <>
-            <div className="flex items-center gap-2 justify-end">
-              <WeatherIcon code={weather.weatherCode} className="w-9 h-9 sm:w-10 sm:h-10" />
-              <span className="text-2xl sm:text-3xl font-light text-gray-100 tabular-nums">
-                {Math.round(weather.temperature)}°
-              </span>
-            </div>
-            <div className="text-[11px] text-gray-500 mt-1">
+          <div className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.08] border border-white/[0.14] backdrop-blur-xl">
+            <WeatherIcon code={weather.weatherCode} className="w-4 h-4" />
+            <span className="text-sm text-white font-light tabular-nums">
+              {Math.round(weather.temperature)}°
+            </span>
+            <span className="text-xs text-white/60">
               {loading ? (
-                <span className="text-gray-600">Updating...</span>
+                <span className="text-white/40">Updating...</span>
               ) : (
                 <>
                   {labels[weather.weatherCode] || 'Unknown'}
                   {locationName && <span> · {locationName}</span>}
                 </>
               )}
-            </div>
-          </>
+            </span>
+          </div>
         )}
         {!weather && loading && (
-          <div className="text-xs text-gray-500 animate-pulse">Loading weather...</div>
+          <div className="text-xs text-white/50 animate-pulse">Loading weather...</div>
         )}
       </div>
+      <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
     </div>
   )
 }

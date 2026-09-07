@@ -28,12 +28,12 @@ import ClockWeather from '../components/ClockWeather'
 import TodoList from '../components/TodoList'
 import Widget from '../components/Widget'
 import SettingsPanel from '../components/SettingsPanel'
+import Background from '../components/Background'
 
-type WidgetId = 'clock' | 'search' | 'pinned' | 'quicklinks' | 'todos'
+type WidgetId = 'clock' | 'pinned' | 'quicklinks' | 'todos'
 
 const widgetMeta: Record<WidgetId, { title: string; component: () => JSX.Element | null }> = {
   clock: { title: '', component: () => <ClockWeather /> },
-  search: { title: '', component: () => <BookmarkSearch /> },
   pinned: { title: '★ Pinned', component: () => <PinnedBookmarks /> },
   quicklinks: { title: 'Quick Links', component: () => <QuickLinks /> },
   todos: { title: 'Todos', component: () => <DashboardTodos /> },
@@ -121,16 +121,11 @@ function Dashboard() {
 
 export default function NewTab() {
   const [activeTab, setActiveTab] = useState<Tab>('dashboard')
-  const { theme } = useSettings()
 
   return (
-    <div
-      className="min-h-screen"
-      style={{
-        background: `linear-gradient(135deg, ${theme.gradientFrom}, ${theme.gradientVia}, ${theme.gradientTo})`,
-      }}
-    >
-      <div className="max-w-5xl mx-auto p-4 sm:p-6">
+    <div className="min-h-screen">
+      <Background />
+      <div className="relative z-10 max-w-5xl mx-auto p-4 sm:p-6">
         <TabBar activeTab={activeTab} onChange={setActiveTab} />
         <SettingsPanel />
         <div className="flex justify-end -mt-2 mb-1">
