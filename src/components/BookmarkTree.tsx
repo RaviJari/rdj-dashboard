@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo, useCallback, Component, type ReactNode } from 'react'
+import { setStored } from '../lib/storage'
 import { useBookmarks } from '../hooks/useBookmarks'
 import { getDomain, getColor } from '../utils/bookmarkHelpers'
 import type { BookmarkTreeNode } from '../types'
@@ -239,7 +240,7 @@ function TreeContent() {
       } else {
         next.add(id)
       }
-      localStorage.setItem(storageKey, JSON.stringify([...next]))
+      setStored(storageKey, [...next])
       return next
     })
   }, [storageKey])

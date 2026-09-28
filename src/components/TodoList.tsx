@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { setStored } from '../lib/storage'
 import {
   DndContext,
   closestCenter,
@@ -110,7 +111,7 @@ export default function TodoList() {
   }, [])
 
   useEffect(() => {
-    localStorage.setItem('todos', JSON.stringify(todos))
+    setStored('todos', todos)
   }, [todos])
 
   function addTodo() {

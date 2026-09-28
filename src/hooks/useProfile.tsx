@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react'
+import { setStored } from '../lib/storage'
 
 export type Profile = 'personal' | 'work'
 
@@ -35,12 +36,12 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
   const [profile, setProfileState] = useState<Profile>(loadProfile)
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, profile)
+    setStored(STORAGE_KEY, profile)
   }, [profile])
 
   function setProfile(p: Profile) {
     setProfileState(p)
-    localStorage.setItem(STORAGE_KEY, p)
+    setStored(STORAGE_KEY, p)
   }
 
   return (

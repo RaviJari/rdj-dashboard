@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react'
+import { setStored } from '../lib/storage'
 
 export type BorderRadius = 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'
 export type ThemeKey = 'midnight' | 'slate' | 'emerald' | 'amber' | 'ruby' | 'ocean'
@@ -130,7 +131,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
   const [settings, setSettings] = useState<Settings>(loadSettings)
 
   useEffect(() => {
-    localStorage.setItem('dashboard-settings', JSON.stringify(settings))
+    setStored('dashboard-settings', settings)
   }, [settings])
 
   const updateSettings = useCallback((partial: Partial<Settings>) => {

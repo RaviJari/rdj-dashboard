@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useSettings } from '../context/SettingsContext'
 import { useProfile } from '../hooks/useProfile'
+import { setStored } from '../lib/storage'
 import SearchOverlay from './SearchOverlay'
 import { Sun, CloudSun, Cloud, CloudFog, CloudDrizzle, CloudRain, CloudSnow, CloudLightning } from 'lucide-react'
 
@@ -282,7 +283,7 @@ export default function ClockWeather() {
           value={focus}
           onChange={(e) => {
             setFocus(e.target.value)
-            localStorage.setItem(focusKey, e.target.value)
+            setStored(focusKey, e.target.value)
           }}
           placeholder="What's your main focus today?"
           className="bg-transparent text-center outline-none text-base sm:text-lg text-white font-light placeholder:text-white/40 border-b border-white/25 focus:border-white/70 pb-1 min-w-[260px] max-w-[420px] transition-colors"

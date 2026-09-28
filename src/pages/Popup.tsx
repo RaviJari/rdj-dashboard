@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useSettings } from '../context/SettingsContext'
 import PinnedBookmarks from '../components/PinnedBookmarks'
 import QuickLinks from '../components/QuickLinks'
@@ -6,6 +7,20 @@ import ProfileSwitcher from '../components/ProfileSwitcher'
 
 export default function Popup() {
   const { theme } = useSettings()
+
+  useEffect(() => {
+    function onClick(e: MouseEvent) {
+      if (e.defaultPrevented || e.button !== 0) return
+      const anchor = (e.target as HTMLElement).closest<HTMLAnchorElement>('a')
+      if (!anchor || !anchor.href) return
+      const url = anchor.href
+      if (url.startsWith('chrome') || url.startsWith('about:') || url.startsWith('javascript:')) return
+      e.preventDefault()
+      chrome.tabs.create({ url, active: !(e.metaKey || e.ctrlKey) })
+    }
+    document.addEventListener('click', onClick)
+    return () => document.removeEventListener('click', onClick)
+  }, [])
 
   return (
     <div

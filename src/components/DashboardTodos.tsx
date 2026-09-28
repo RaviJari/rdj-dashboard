@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { setStored } from '../lib/storage'
 
 interface Todo {
   id: string
@@ -23,7 +24,7 @@ export default function DashboardTodos() {
 
   function syncTodos(updated: Todo[]) {
     setTodos(updated)
-    localStorage.setItem('todos', JSON.stringify(updated))
+    setStored('todos', updated)
   }
 
   function addTodo() {

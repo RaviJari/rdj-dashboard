@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { setStored } from '../lib/storage'
 import FaviconImg from './FaviconImg'
 import { useProfile, profileKey } from '../hooks/useProfile'
 
@@ -40,7 +41,7 @@ export default function QuickLinks() {
   }, [storageKey])
 
   useEffect(() => {
-    localStorage.setItem(storageKey, JSON.stringify(links))
+    setStored(storageKey, links)
   }, [links, storageKey])
 
   useEffect(() => {

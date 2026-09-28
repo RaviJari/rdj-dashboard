@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { setStored } from '../lib/storage'
 
 export default function Notes() {
   const [text, setText] = useState('')
@@ -10,7 +11,7 @@ export default function Notes() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      localStorage.setItem('notes', text)
+      setStored('notes', text)
     }, 500)
     return () => clearTimeout(timer)
   }, [text])
