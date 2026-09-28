@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Privacy Policy — RDJ Dashboard</title>
+<meta name="robots" content="noindex" />
+<style>
+  :root { --bg: #0b0b12; --panel: #14141d; --border: rgba(255,255,255,0.10); --muted: #8b8b9e; --text: #e8e8f0; --accent: #6366f1; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 56px 24px 48px; }
+  h1 { font-size: 32px; margin-bottom: 8px; letter-spacing: -0.02em; }
+  .updated { color: var(--muted); font-size: 14px; margin-bottom: 32px; }
+  h2 { font-size: 19px; margin: 32px 0 10px; color: #fff; }
+  p, li { font-size: 15px; color: var(--muted); }
+  ul { padding-left: 20px; }
+  .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; margin-top: 12px; }
+  a { color: #a5b4fc; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Privacy Policy</h1>
+    <p class="updated">Last updated: September 2026</p>
+
+    <p>
+      RDJ Dashboard ("the extension") is a new-tab dashboard for Chrome. It is designed to be private by default:
+      there is no analytics, no tracking, no accounts, and no servers operated by the developer.
+      All data you create lives in your own Chrome profile and is synced only through your own Google account.
+    </p>
+
+    <h2>Data we store</h2>
+    <p>Everything is stored locally on your device. The extension may store:</p>
+    <ul>
+      <li>Your dashboard settings, theme, and widget layout</li>
+      <li>Your active profile (Personal/Work) and per-profile quick links, pinned bookmarks, and focus entries</li>
+      <li>Your todos and notes</li>
+    </ul>
+    <p>
+      When Chrome's "Sync" is enabled and your Chrome extensions sync is turned on, these items are mirrored to
+      <strong>Chrome sync storage</strong>, which is synchronized across your devices through your Google account
+      by Google's own infrastructure. We never see this data.
+    </p>
+
+    <h2>Bookmarks</h2>
+    <p>
+      With your permission, the extension reads your Chrome bookmarks (in Chrome, extension "bookmarks" permission)
+      so it can display and search them. Bookmarks are never transmitted anywhere; they are processed entirely on
+      your device.
+    </p>
+
+    <h2>Third-party services</h2>
+    <div class="panel">
+      <p>The extension calls a few public, keyless APIs only for live data:</p>
+      <ul>
+        <li><strong>Open-Meteo / Nominatim / IP-API</strong> — to fetch weather and approximate location. Your IP address or exact location is never stored by the extension; these calls happen directly from your browser.</li>
+        <li><strong>Unsplash CDN</strong> — to load decorative background photos.</li>
+        <li><strong>Google &amp; DuckDuckGo</strong> — to fetch website favicons.</li>
+      </ul>
+      <p style="margin-top:8px">None of these providers are given your personal data beyond standard request metadata (e.g. an IP address), as with any website you visit.</p>
+    </div>
+
+    <h2>Deletion</h2>
+    <p>
+      Uninstalling the extension removes orphaned local data in Chrome. To stop syncing, turn off Chrome extensions sync
+      or sign out of your Google account. You can delete your synced data by opening
+      <em>chrome://settings/syncSetup</em> → <em>Your Google Account → Data &amp; privacy → Your data in Chrome and Google Account</em>.
+    </p>
+
+    <h2>Contact</h2>
+    <p>Questions? Open an issue on <a href="https://github.com/RaviJari/rdj-dashboard">GitHub</a>.</p>
+
+    <p style="margin-top:40px"><a href="index.html">← Back to home</a></p>
+  </div>
+</body>
+</html>

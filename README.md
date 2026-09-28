@@ -4,6 +4,8 @@ A Momentum-style new-tab dashboard for Chrome that doubles as your mini command 
 
 ![version](https://img.shields.io/badge/version-1.0.0-blue)
 
+🌐 Landing page + privacy policy: **https://ravijari.github.io/rdj-dashboard/**
+
 ## Features
 
 - **Momentum-style home** — full-screen rotated Unsplash photos with daily rotation, giant clock, greeting, date, and "Today's Focus" input.
