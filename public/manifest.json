@@ -1,10 +1,13 @@
 {
   "manifest_version": 3,
   "name": "RDJ Dashboard",
-  "version": "1.0.0",
-  "description": "Developer Command Center — New Tab Dashboard",
+  "version": "1.1.0",
+  "description": "Developer Command Center \u2014 New Tab Dashboard",
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAo6PjxBuExyAz6qe5PYBok/iskt5/rrdFzDJAG3+utZYtlHl+Fvq/Mq7kGjFthAjGOYv5xHgHx7acH8WLt3Fz54nC/om2gKyijX9M8TkjCCZCmuYe6zEPzasBRknE4TASR3ll+tK5LPzHHuf2yI+D3TnJhPB6FApEf1U1y3A16r7Rh1+mEPRhlapW6mBqICKcoA4g5OqLXiYfvDaS+eN/1ixEsAv4i81nok5UKdb6ylIYY7I2ncShKDSjS7ZPhcsVKMaG4Gs27HPxWxHPwL2P87+DklTm/RPl5AS+XaxwnN6lSr7SK75Xlbj4B5c/9T0GCitWzohuvNK8j8PMvev5awIDAQAB",
-  "permissions": ["bookmarks", "storage"],
+  "permissions": [
+    "bookmarks",
+    "storage"
+  ],
   "host_permissions": [
     "https://api.open-meteo.com/*",
     "https://geocoding-api.open-meteo.com/*",
